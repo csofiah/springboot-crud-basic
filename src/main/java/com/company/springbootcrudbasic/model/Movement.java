@@ -16,7 +16,7 @@ public class Movement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Date creationTimestamp;
+    private Date transactionDate;
     private String type;
     private String description;
     private Long amount;

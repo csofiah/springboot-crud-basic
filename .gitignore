@@ -31,3 +31,14 @@ build/
 
 ### VS Code ###
 .vscode/
+.factorypath
+
+# Gradle
+out/
+.gradle/
+build/
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
