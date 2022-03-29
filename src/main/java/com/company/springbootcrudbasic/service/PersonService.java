@@ -25,10 +25,12 @@ public class PersonService {
             Person newPerson = PersonMapper.createEntityFromDto(personDto);
             return PersonMapper.createDtoFromEntity(personRepository.save(newPerson));
         }catch(Exception ex){
-            PersonException2 exp = new PersonException2(METHOD_NAME, ex);
+           /* PersonException2 exp = new PersonException2(METHOD_NAME, ex);
             log.error("Error al insertar Persona {}", exp.getMessage());
-            throw  exp;
-            //throw PersonException.Type.ERROR_INSERT_PERSON.build();
+            throw  exp;*/
+            //TODO revisar como enviarle la exception
+            log.error("Error al insertar Persona {}", ex.getMessage());
+            throw PersonException.Type.ERROR_INSERT_PERSON.build();
 
         }
     }
