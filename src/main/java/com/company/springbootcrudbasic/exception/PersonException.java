@@ -1,11 +1,10 @@
 package com.company.springbootcrudbasic.exception;
 
-import lombok.Getter;
-
 public class PersonException extends RuntimeException {
 
     public enum Type{
-        ERROR_INSERT_PERSON("Error creando la persona");
+        ERROR_INSERT_PERSON("Error creando la persona"),
+        ERROR_NOT_FOUND_PERSON("Error al buscar la persona");
 
         private final String message;
 
