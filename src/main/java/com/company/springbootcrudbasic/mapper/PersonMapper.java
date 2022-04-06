@@ -12,7 +12,7 @@ public class PersonMapper {
     public static PersonDto createDtoFromEntity(Person person){
         PersonDto personDto = PersonDto.builder().build();
         if(person != null){
-            personDto.toBuilder()
+            personDto = personDto.toBuilder()
                     .id(person.getId())
                     .fistName(person.getFistName())
                     .middleName(person.getMiddleName())
@@ -31,7 +31,7 @@ public class PersonMapper {
     public static Person createEntityFromDto(PersonDto personDto){
         Person person = Person.builder().build();
         if(personDto!=null){
-            person.toBuilder()
+            person = person.toBuilder()
                     .id(personDto.getId())
                     .fistName(personDto.getFistName())
                     .middleName(personDto.getMiddleName())

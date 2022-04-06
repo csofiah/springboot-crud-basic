@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -16,6 +18,18 @@ import org.springframework.web.server.ResponseStatusException;
 public class PersonRestController {
 
     private final PersonaService personService;
+
+    @GetMapping(path = "/list")
+    public List<PersonDto> getListPerson() {
+        try {
+            log.info("lista personas");
+            return personService.getAllPerson();
+        } catch (PersonException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "error listando persona");
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error del servidor, contacte al administrador");
+        }
+    }
 
     @PostMapping
     public PersonDto addPerson(@RequestBody PersonDto personDto) {
