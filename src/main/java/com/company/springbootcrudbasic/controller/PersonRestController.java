@@ -2,6 +2,7 @@ package com.company.springbootcrudbasic.controller;
 
 import com.company.springbootcrudbasic.dto.PersonDto;
 import com.company.springbootcrudbasic.exception.PersonException;
+import com.company.springbootcrudbasic.service.PersonaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("api/person")
 public class PersonRestController {
 
-    private final PersonService personService;
+    private final PersonaService personService;
 
     @PostMapping
     public PersonDto addPerson(@RequestBody PersonDto personDto) {
