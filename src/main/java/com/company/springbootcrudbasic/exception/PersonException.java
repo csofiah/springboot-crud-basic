@@ -4,6 +4,9 @@ public class PersonException extends RuntimeException {
 
     public enum Type{
         ERROR_INSERT_PERSON("Error creando la persona"),
+        ERROR_GET_LIST_PERSON("Error listando personas"),
+        ERROR_DELETE_PERSON("Error eliminando persona"),
+        ERROR_UPDATE_PERSON("Error actualizando persona, ya que no se consiguio la persona en bd"),
         ERROR_NOT_FOUND_PERSON("Error al buscar la persona");
 
         private final String message;

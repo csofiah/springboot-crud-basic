@@ -47,7 +47,7 @@ public class PersonMapper {
     }
 
     public static List<PersonDto> createListDtoFromEntity(List<Person> persons) {
-        List<PersonDto> personDtos = new ArrayList<PersonDto>();
+        List<PersonDto> personDtos = new ArrayList<PersonDto>();//optional, stream
         if (persons != null) {
             for (Person person : persons) {
                 personDtos.add(createDtoFromEntity(person));
