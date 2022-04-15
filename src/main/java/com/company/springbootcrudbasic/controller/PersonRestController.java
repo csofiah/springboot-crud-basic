@@ -74,7 +74,7 @@ public class PersonRestController {
             log.info("Actualizando usuario");
             return personService.updatePerson(id, newUser);
         } catch (PersonException cex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error en proceso de actualizar persona");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, cex.getMessage());
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Se ha presentado un problema");
         }

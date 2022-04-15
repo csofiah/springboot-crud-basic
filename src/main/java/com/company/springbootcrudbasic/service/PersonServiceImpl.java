@@ -10,8 +10,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -20,12 +21,11 @@ public class PersonServiceImpl implements PersonaService {
 
     private final PersonRepository personRepository;
 
-    //MapStruct
     public PersonDto addPerson(PersonDto personDto) throws PersonException {
         try {
             //validate for type identification
-            Person newPerson = PersonMapper.createEntityFromDto(personDto);
-            return PersonMapper.createDtoFromEntity(personRepository.save(newPerson));
+
+            return PersonMapper.createDtoFromEntity(personRepository.save(PersonMapper.createEntityFromDto(personDto)));
         } catch (PersonException ex) {
             throw PersonException.Type.ERROR_INSERT_PERSON.build(ex);
         } catch (Exception ex) {
@@ -37,12 +37,10 @@ public class PersonServiceImpl implements PersonaService {
 
     public List<PersonDto> getAllPerson() {
         try {
-            log.info("listando persons");
-            List<Person> personList = new ArrayList<>();
-            Iterable<Person> iter = personRepository.findAll(); //stream
-            iter.forEach(personList::add);
+            return personRepository.findAll().stream()
+                    .map(PersonMapper::createDtoFromEntity)
+                    .collect(Collectors.toList());
 
-            return PersonMapper.createListDtoFromEntity(personList);
         } catch (PersonException ex) {
             throw PersonException.Type.ERROR_GET_LIST_PERSON.build(ex);
         } catch (Exception ex) {
@@ -81,13 +79,14 @@ public class PersonServiceImpl implements PersonaService {
 
     public PersonDto updatePerson(long id, PersonDto newPerson) {
         try {
-            Person oldPerson = personRepository.findById(id).orElse(null);
-            log.info("update person id {}", id);//optional stream
-            if (oldPerson != null) {
+
+            Optional<Person> oldPersonOptional = personRepository.findById(id);
+            if(oldPersonOptional.isPresent()){
                 Person newEntity = PersonMapper.createEntityFromDto(newPerson);
                 return PersonMapper.createDtoFromEntity(personRepository.save(newEntity));
-            } else {
-                throw PersonException.Type.ERROR_NOT_FOUND_PERSON.build();
+            }else{
+                log.error("No se encontro la persona con id {}", id);
+                throw PersonException.Type.ERROR_UPDATE_PERSON.build();
             }
 
         } catch (PersonException ex) {
@@ -98,4 +97,8 @@ public class PersonServiceImpl implements PersonaService {
         }
     }
 
+
+    //return oldPersonOptional.isPresent() ? createNewPersonAndUpdate(newPerson) : throwException(id);
+           /* return personRepository.findById(id)
+                    .map(newPerson2 ->   this.createNewPersonAndUpdate(newPerson)).get();*/
 }
