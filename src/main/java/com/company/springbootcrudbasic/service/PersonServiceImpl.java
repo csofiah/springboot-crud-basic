@@ -82,7 +82,10 @@ public class PersonServiceImpl implements PersonaService {
 
             Optional<Person> oldPersonOptional = personRepository.findById(id);
             if(oldPersonOptional.isPresent()){
-                Person newEntity = PersonMapper.createEntityFromDto(newPerson);
+                PersonDto newPersonToUpdate = newPerson.toBuilder()
+                        .id(id)
+                        .build();
+                Person newEntity = PersonMapper.createEntityFromDto(newPersonToUpdate);
                 return PersonMapper.createDtoFromEntity(personRepository.save(newEntity));
             }else{
                 log.error("No se encontro la persona con id {}", id);
