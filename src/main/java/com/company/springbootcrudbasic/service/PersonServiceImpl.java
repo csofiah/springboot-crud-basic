@@ -79,7 +79,9 @@ public class PersonServiceImpl implements PersonaService {
 
     public PersonDto updatePerson(long id, PersonDto newPerson) {
         try {
-
+                //validar si la persona existe
+            //si existe esa misma person setearle los datos de la nueva persona y mandarla a guardar en el repo
+            //sino existe lanzar una exception
             Optional<Person> oldPersonOptional = personRepository.findById(id);
             if(oldPersonOptional.isPresent()){
                 PersonDto newPersonToUpdate = newPerson.toBuilder()

@@ -35,13 +35,16 @@ public class PersonMapper {
     }
 
     public static Person createEntityFromDto(PersonDto personDto) {
-        Optional<PersonDto> optionalPersonDto = Optional.ofNullable(personDto);
+     // arreglar
+        return null;
+       /* Optional<PersonDto> optionalPersonDto = Optional.ofNullable(personDto);
         Person person = Person.builder().build();
-        return optionalPersonDto.isPresent() ? getPersonFromDto(optionalPersonDto.get(), person) : person;
+        return optionalPersonDto.isPresent() ? getPersonFromDto(optionalPersonDto.get(), person) : person;*/
     }
 
-    private static Person getPersonFromDto(PersonDto personDto, Person person) {
-        return person.toBuilder()
+    //
+    private static Person mapDtoToModel(PersonDto personDto) {
+        return Person.builder()
                 .id(personDto.getId())
                 .fistName(personDto.getFistName())
                 .middleName(personDto.getMiddleName())
@@ -75,6 +78,8 @@ public class PersonMapper {
     }
 
     public static Date getFoundationDate(Person person) {
+
+        //optional usar orElse para colocar el valor por defecto
         Optional<Person> optionalPerson = Optional.ofNullable(person);
         //optionalPerson.isPresent() ? optionalPerson.get().getFoundationDate() : null;
         return optionalPerson.map(Person::getFoundationDate).orElse(null);
