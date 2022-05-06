@@ -4,15 +4,12 @@ import com.company.springbootcrudbasic.dto.PersonDto;
 import com.company.springbootcrudbasic.exception.BusinessException;
 import com.company.springbootcrudbasic.exception.PersonException;
 import com.company.springbootcrudbasic.mapper.PersonMapper;
-import com.company.springbootcrudbasic.model.Person;
 import com.company.springbootcrudbasic.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,8 +21,7 @@ public class PersonServiceImpl implements PersonaService {
     public PersonDto addPerson(PersonDto personDto) throws PersonException {
         try {
             //validate for type identification
-
-            return PersonMapper.createDtoFromEntity(personRepository.save(PersonMapper.createEntityFromDto(personDto)));
+            return PersonMapper.mapToPersonDto(personRepository.save(PersonMapper.mapToModel(personDto)));
         } catch (PersonException ex) {
             throw PersonException.Type.ERROR_INSERT_PERSON.build(ex);
         } catch (Exception ex) {
@@ -34,11 +30,31 @@ public class PersonServiceImpl implements PersonaService {
         }
     }
 
+    @Override
+    public List<PersonDto> getAllPerson() {
+        return null;
+    }
 
+    @Override
+    public PersonDto getPersonById(long id) {
+        return null;
+    }
+
+    @Override
+    public int deletePersonById(long id) {
+        return 0;
+    }
+
+    @Override
+    public PersonDto updatePerson(long id, PersonDto newPerson) {
+        return null;
+    }
+
+/*
     public List<PersonDto> getAllPerson() {
         try {
             return personRepository.findAll().stream()
-                    .map(PersonMapper::createDtoFromEntity)
+                    .map(PersonMapper::createPersonDtoFromModel)
                     .collect(Collectors.toList());
 
         } catch (PersonException ex) {
@@ -53,7 +69,7 @@ public class PersonServiceImpl implements PersonaService {
     public PersonDto getPersonById(long id) {
         try {
             log.info("buscando person id {}", id);
-            return PersonMapper.createDtoFromEntity(personRepository.findById(id).orElseGet(null));
+            return PersonMapper.createPersonDtoFromModel(personRepository.findById(id).orElseGet(null));
         } catch (PersonException ex) {
             throw PersonException.Type.ERROR_NOT_FOUND_PERSON.build(ex);
         } catch (Exception ex) {
@@ -88,7 +104,7 @@ public class PersonServiceImpl implements PersonaService {
                         .id(id)
                         .build();
                 Person newEntity = PersonMapper.createEntityFromDto(newPersonToUpdate);
-                return PersonMapper.createDtoFromEntity(personRepository.save(newEntity));
+                return PersonMapper.createPersonDtoFromModel(personRepository.save(newEntity));
             }else{
                 log.error("No se encontro la persona con id {}", id);
                 throw PersonException.Type.ERROR_UPDATE_PERSON.build();
@@ -100,7 +116,7 @@ public class PersonServiceImpl implements PersonaService {
             log.error("Error actualizar Persona {}", ex.getMessage());
             throw BusinessException.Type.ERROR_GENERAL_BUSINESS.build(ex);
         }
-    }
+    }*/
 
 
     //return oldPersonOptional.isPresent() ? createNewPersonAndUpdate(newPerson) : throwException(id);

@@ -2,8 +2,8 @@ package com.company.springbootcrudbasic.mapper;
 
 import com.company.springbootcrudbasic.dto.PersonDto;
 import com.company.springbootcrudbasic.model.Person;
+import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -14,14 +14,8 @@ public class PersonMapper {
     private PersonMapper() {
     }
 
-    public static PersonDto createDtoFromEntity(Person person) {
-        Optional<Person> optionalPerson = Optional.ofNullable(person);
-        PersonDto personDto = PersonDto.builder().build();
-        return optionalPerson.isPresent() ? getPersonDtoFromPerson(optionalPerson.get(), personDto) : personDto;
-    }
-
-    private static PersonDto getPersonDtoFromPerson(Person person, PersonDto personDto) {
-        return personDto.toBuilder()
+    public static PersonDto mapToPersonDto(Person person) {
+        return PersonDto.builder()
                 .id(person.getId())
                 .fistName(person.getFistName())
                 .middleName(person.getMiddleName())
@@ -34,16 +28,7 @@ public class PersonMapper {
                 .build();
     }
 
-    public static Person createEntityFromDto(PersonDto personDto) {
-     // arreglar
-        return null;
-       /* Optional<PersonDto> optionalPersonDto = Optional.ofNullable(personDto);
-        Person person = Person.builder().build();
-        return optionalPersonDto.isPresent() ? getPersonFromDto(optionalPersonDto.get(), person) : person;*/
-    }
-
-    //
-    private static Person mapDtoToModel(PersonDto personDto) {
+    public static Person mapToModel(PersonDto personDto) {
         return Person.builder()
                 .id(personDto.getId())
                 .fistName(personDto.getFistName())
@@ -57,31 +42,23 @@ public class PersonMapper {
                 .build();
     }
 
-    //TODO este metodo lo deje solo para ejemplo porque ya no lo uso
-    public static List<PersonDto> createListDtoFromEntity(List<Person> persons) {
-        Optional<List<Person>> optionalListPerson = Optional.ofNullable(persons);
-        List<PersonDto> listPersonDto = new ArrayList<>();
-
-        //optionalListPerson.isPresent() ? listPersonDto : getListPersonDto(optionalListPerson.get());
-        return optionalListPerson.map(people -> listPersonDto).orElseGet(() -> getListPersonDto(optionalListPerson.get()));
-    }
-
-    private static List<PersonDto> getListPersonDto(List<Person> listPerson) {
-        return listPerson.stream()
-                .map(PersonMapper::createDtoFromEntity)
-                .collect(Collectors.toList());
-    }
-
     public static String getCompanyName(Person person) {
-        Optional<Person> optionalPerson = Optional.ofNullable(person);
-        return optionalPerson.isPresent() ? optionalPerson.get().getCompanyName() : "";
+        Optional<String> optionalCompName = Optional.ofNullable(person.getCompanyName());
+        return optionalCompName.map(s -> optionalCompName.get())
+                .orElse("");
     }
 
     public static Date getFoundationDate(Person person) {
+        Optional<Date> optionalPerson = Optional.ofNullable(person.getFoundationDate());
+        return optionalPerson.map(s -> optionalPerson.get())
+                .orElse(null);
+    }
 
-        //optional usar orElse para colocar el valor por defecto
-        Optional<Person> optionalPerson = Optional.ofNullable(person);
-        //optionalPerson.isPresent() ? optionalPerson.get().getFoundationDate() : null;
-        return optionalPerson.map(Person::getFoundationDate).orElse(null);
+
+    //TODO metodo de ejemplo
+    private static List<PersonDto> getListPersonDto(List<Person> listPerson) {
+        return listPerson.stream()
+                .map(PersonMapper::mapToPersonDto)
+                .collect(Collectors.toList());
     }
 }
