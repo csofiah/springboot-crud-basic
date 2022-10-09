@@ -1,8 +1,7 @@
 package com.company.springbootcrudbasic.mapper;
 
 import com.company.springbootcrudbasic.dto.PersonDto;
-import com.company.springbootcrudbasic.model.Person;
-import org.mapstruct.Mapper;
+import com.company.springbootcrudbasic.entities.Person;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 

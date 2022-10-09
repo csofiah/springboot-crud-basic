@@ -1,5 +1,6 @@
-package com.company.springbootcrudbasic.model;
+package com.company.springbootcrudbasic.entities;
 
+import com.company.springbootcrudbasic.entities.Person;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,8 +1,7 @@
 package com.company.springbootcrudbasic.mapper;
 
 import com.company.springbootcrudbasic.dto.PersonDto;
-import com.company.springbootcrudbasic.model.Person;
-import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
+import com.company.springbootcrudbasic.entities.Person;
 
 import java.util.Date;
 import java.util.List;
@@ -43,14 +42,12 @@ public class PersonMapper {
     }
 
     public static String getCompanyName(Person person) {
-        Optional<String> optionalCompName = Optional.ofNullable(person.getCompanyName());
-        return optionalCompName.map(s -> optionalCompName.get())
+        return Optional.ofNullable(person.getCompanyName())
                 .orElse("");
     }
 
     public static Date getFoundationDate(Person person) {
-        Optional<Date> optionalPerson = Optional.ofNullable(person.getFoundationDate());
-        return optionalPerson.map(s -> optionalPerson.get())
+        return Optional.ofNullable(person.getFoundationDate())
                 .orElse(null);
     }
 

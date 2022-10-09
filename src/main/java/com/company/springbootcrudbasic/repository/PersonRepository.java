@@ -1,8 +1,7 @@
 package com.company.springbootcrudbasic.repository;
 
-import com.company.springbootcrudbasic.model.Person;
+import com.company.springbootcrudbasic.entities.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
 }
